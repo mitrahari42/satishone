@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="59a4dcce-9e3f-481d-acc6-b8d98d341f54" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="jenkinspipelinesoneFlow" doc:id="b3aca52f-cff1-4b90-a2c8-79d51b1f2663" >
+		<http:listener doc:name="Listener" doc:id="0b030ca5-2af5-40b2-bd4d-f99f4f568261" config-ref="HTTP_Listener_config" path="/testjenkin"/>
+		<logger level="INFO" doc:name="Logger" doc:id="1f66c05c-c047-4e23-a283-4b5e3db3627a" message="data"/>
+		<ee:transform doc:name="Transform Message" doc:id="ff78e6f1-dedd-4c0b-ae8f-dc2ef8bd232e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>
